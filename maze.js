@@ -10,7 +10,7 @@ tuna.src = "assets/images/cat.png";
 var wall = new Image();
 wall.src = "assets/images/wall.png";
 
-var maze = [];
+var maze = [0];
 
 //Set up start loaction of player
 var player = new object ({
