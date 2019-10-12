@@ -1,3 +1,35 @@
+
+//Fire Base //
+var firebaseConfig = {
+    apiKey: "AIzaSyAMuI4ukHem5yFtVc8s38IQ0Re3zK1J7lU",
+    authDomain: "maze-game-01.firebaseapp.com",
+    databaseURL: "https://maze-game-01.firebaseio.com",
+    projectId: "maze-game-01",
+    storageBucket: "maze-game-01.appspot.com",
+    messagingSenderId: "313717969408",
+    appId: "1:313717969408:web:7ad33d531eb574536dfee5",
+    measurementId: "G-M5C0F7QHKD"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Multiplayer Firebase Variables //
+
+  var database = firebase.database();
+
+
+  var playersRef = database.ref("players");
+  var currentTurnRef = database.ref("turn");
+  var username = "";
+  var username2 = "";
+
+
+//----------------------------------------------------//
+
+
+
+
 $(document).ready(function(){
     
     var template = [
@@ -430,4 +462,55 @@ $(document).ready(function(){
             }
         }
     }
-})
+
+
+//Enter Username for Player 1
+
+
+$("#plyer1Name").on("click", function(event){
+    event.preventDefault();
+   username = $("#usernameEnter").val().trim();
+  // username.child('#usernameEnter').update();
+   database.ref().push({
+       username: username,
+       
+   });
+
+});
+
+//DatabaseListener
+
+database.ref().on("child_added", function(snapshot) {
+    var ss = snapshot.val();
+
+    // var addUser =
+
+ 
+     $("#player1-name").text(ss.username);
+     $("#player2-name").text(ss.username2);
+ 
+ 
+     console.log(ss.username);
+ 
+     $("#player1-name").append();
+     $("#player2-name").append();
+ 
+ 
+     return   
+   
+ 
+ });
+
+//Enter Username for Player 2
+
+$("#plyer2Name").on("click", function(event){
+    event.preventDefault();
+   username2 = $("#usernameEnter2").val().trim();
+  
+   database.ref().push({
+       username2: username2,
+       
+   })
+
+});
+});
