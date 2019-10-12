@@ -118,7 +118,7 @@ $(document).ready(function(){
 
     var moveTrack = [];
     
-    //Set up start loaction of player
+    //Set up start location of player 1
     var player = new Object ({
         x   :0,
         y   :22,
@@ -128,6 +128,19 @@ $(document).ready(function(){
     
     var x = 0;
     var y = 0;
+
+    //Set up start location of player 2
+
+    var player2 = new Object ({
+        x   :0,
+        y   :24,
+        loc :1272, 
+        moves:0
+    });
+    
+    var x = 0;
+    var y = 0;
+
     
     //Save maze states in each cell
     for (var i = 0; i < ((53 * 47) + 1) ; i++) {
@@ -153,6 +166,16 @@ $(document).ready(function(){
         "loc": player.loc
         })
     }
+
+     //Push location record to move tracker for PLayer 2
+        function moveTracker2() {
+            moveTrack2.push({
+            "x"  : x , 
+            "y"  : y , 
+            "loc": player2.loc
+            })
+        }
+        
     
     //Generate key in function for moving
     document.onkeydown = function (event) {
@@ -256,6 +279,133 @@ $(document).ready(function(){
         //When players' location match exit location, players win.
         if (maze[player.loc].state == 2) {
             document.getElementById("moves").innerText = "You win!";
+            // location.reload();
+        }
+    
+    }
+
+                    //Player 2 Key Functions //
+    //----------------------------------------------------------//
+
+     //Generate key in function for moving
+     document.onkeydown = function (event) {
+
+        switch (event.keyCode) {
+    
+            //Right
+            case 68:
+            //Once player2 click right key, players x loction will add 1 and moves willl increase 1. If hitting the wall, the right key wont't do anything. 
+
+                if (player2.x != 52){
+                    player2.loc ++;
+                    if (maze[player2.loc].state != 0 ){
+
+                        //Paint where players were before they click keys
+                        // player2.x * 
+                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.fill();
+                        player2.x ++;
+                        player2.moves ++;
+                        moveTracker2();
+                    }
+                    else (player2.loc--);
+                }
+                break;
+            
+            //Left
+            case 65:
+                //Once players click left key, players x loction will decrease 1 and moves willl increase 1. If hitting the wall, the left key wont't do anything.
+
+
+                if (player2.x !=0){
+                    player2.loc --;
+                    if (maze[player2.loc].state != 0 ){
+
+                        //Paint where players were before they click keys
+                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.fill();
+                        player2.x --;
+                        player2.moves ++;
+                        moveTracker2();
+                    }
+                    else (player2.loc++);
+                }
+                break;
+    
+            //Down
+            case 83:
+                //Once players click down key, players y loction will increase 1 and moves willl increase 1. If hitting the wall, the down key wont't do anything. 
+                
+                if (player2.y !=46){
+
+                    //player.loc += 53;
+                    player2.loc += 53;
+                    if (maze[player2.loc].state != 0 ){
+
+                        //Paint where players were before they click keys
+                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.fill();
+                        player2.y ++;
+                        player2.moves ++;
+                        moveTracker2();
+                    }
+
+                    else (player2.loc -= 53);
+                    
+                }
+                break;
+            
+            //Up
+            case 87:
+                //Once players click up key, players y loction will increase 1 and moves willl increase 1. If hitting the wall, the up key wont't do anything.
+
+                if (player2.y !=0){
+
+                    player2.loc -= 53;
+                    if (maze[player2.loc].state != 0 ){
+
+                        //Paint where players were before they click keys
+                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.fill();
+                        player2.y --;
+                        player2.moves ++;
+                        moveTracker2();
+                    }
+
+                    else (player2.loc += 53);
+                }
+                break;
+        }
+    
+        console.log(moveTrack);
+
+
+
+        //----------------------------------//
+
+        //Put image of where players are
+        ctx.drawImage(cat, player.x * 15, player.y * 15, 15, 15);
+
+                             //Player 2 Image //
+        //--------------------------------------------------//
+
+        ctx.drawImage(cat, player2.x * 15, player2.y * 15, 15, 15);
+               
+        // ctx.fill();
+    
+        //Print moves on screen
+        document.getElementById("moves").innerText = "Moves: " + player.moves;
+        //Player 2 moves on screen counter
+        document.getElementById("moves2").innerText = "Moves: " + player2.moves;
+
+        //When players' location match exit location, players win.
+        if (maze[player.loc].state == 2) {
+            document.getElementById("moves").innerText = "You win!";
+            // location.reload();
+        }
+
+        if (maze[player2.loc].state == 2) {
+            document.getElementById("moves2").innerText = "You win!";
             // location.reload();
         }
     

@@ -1,5 +1,5 @@
 body {
-    background-image: url("./Images/background00.png");
+    background-image: url("./assets/images/background00.png");
    
 }
 
@@ -26,7 +26,7 @@ h1 {
     
 }
 .playerContainer {
-    background-image: url("./Images/containerback1.png");
+    background-image: url("./assets/images/containerback1.png");
     opacity: 0.9;
     height: 400px;
     width: 20%;
@@ -41,7 +41,7 @@ h1 {
 
 
 #gameContainer {
-    background-image: url("./Images/containerback1.png");
+    background-image: url("./assets/images/containerback1.png");
     width: 70%;
     height: 900px;
     border-radius: 20px;
