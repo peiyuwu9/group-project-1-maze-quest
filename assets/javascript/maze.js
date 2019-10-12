@@ -149,6 +149,65 @@ $(document).ready(function(){
     var maze = [];
 
     var moveTrack = [];
+
+    //----------------------------------------------------//
+    var playersRef = database.ref("players");
+    var playerOneExists = false;
+    var playerTwoExists = false;
+    var currentPlayers = null;
+    var playerOneData = null;
+    var playerTwoData = null;
+    //-----------------------------------------------------------------------------//
+
+// Tracks changes in key which contains player objects
+playersRef.on("value", function(snapshot) {
+    // length of the 'players' array
+    currentPlayers = snapshot.numChildren();
+  
+    // Check to see if players exist
+    playerOneExists = snapshot.child("1").exists();
+    playerTwoExists = snapshot.child("2").exists();
+  
+    // Player data objects
+    playerOneData = snapshot.child("1").val();
+    playerTwoData = snapshot.child("2").val();
+  
+    // If theres a player 1, fill in name and win loss data
+    if (playerOneExists) {
+      $("#player1-name").text(playerOneData.name);
+      $("#player1-wins").text("Wins: " + playerOneData.wins);
+      $("#player1-losses").text("Losses: " + playerOneData.losses);
+    } else {
+      // If there is no player 1, clear win/loss data and show waiting
+      $("#player1-name").text("Waiting for Player 1");
+      $("#player1-wins").empty();
+      $("#player1-losses").empty();
+    }
+  
+    // If theres a player 2, fill in name and win/loss data
+    if (playerTwoExists) {
+      $("#player2-name").text(playerTwoData.name);
+      $("#player2-wins").text("Wins: " + playerTwoData.wins);
+      $("#player2-losses").text("Losses: " + playerTwoData.losses);
+    } else {
+      // If no player 2, clear win/loss and show waiting
+      $("#player2-name").text("Waiting for Player 2");
+      $("#player2-wins").empty();
+      $("#player2-losses").empty();
+    }
+  });
+
+  // When a player joins, checks to see if there are two players now. If yes, then it will start the game.
+playersRef.on("child_added", function(snapshot) {
+    if (currentPlayers === 1) {
+      // set turn to 1, which starts the game
+      currentTurnRef.set(1);
+    }
+  });
+  
+
+
+    //-----------------------------------------------------------------------------//
     
     //Set up start location of player 1
     var player = new Object ({
@@ -435,7 +494,7 @@ $(document).ready(function(){
             document.getElementById("moves").innerText = "You win!";
             // location.reload();
         }
-
+//PLAYER 2 //
         if (maze[player2.loc].state == 2) {
             document.getElementById("moves2").innerText = "You win!";
             // location.reload();
