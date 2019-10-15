@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Allura|Josefin+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: url(https://res.cloudinary.com/mrv5122/image/upload/v1571157833/aboutmebackground_mygn17.jpg);
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+/* nav bar style */
+#navigationContainer {
+    background: black;
+    padding: 3px 5px 3px 5px;
+    margin: 0 30% 0 30%;
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: center;
+    width: 40%;
+    }
+
+#getTuna {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.wrapper{
+    margin-top: 2%;
+
+}
+.wrapper h1{
+   font-family: 'Allura', cursive;
+   font-size: 90px;
+   margin-bottom: 60px;
+   text-align: center;
+   color: black;
+   font-weight: bold;
+}
+
+.team{
+    display:flex;
+    text-align: center;
+    width: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.team .team-member{
+    background:white;
+    margin: 10px;
+    margin-bottom: 50px;
+    width: 300px;
+    padding: 20px;
+    line-height: 20px;
+    color: #8e8b8b;
+    position: relative;
+}
+
+.team .team-member h3 {
+    color: #81c644;
+    font-size: 26px;
+    margin-top: 50px;
+}
+.team .team-member p.role{
+    color: #ccc;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 12px 0;
+}
+
+.team .team-member img{
+    width: 120px;
+    height: 125px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 10px;
+}

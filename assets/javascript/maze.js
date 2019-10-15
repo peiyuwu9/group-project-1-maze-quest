@@ -1,5 +1,5 @@
+$(document).ready(function(){
 
-//Fire Base //
 var firebaseConfig = {
     apiKey: "AIzaSyAMuI4ukHem5yFtVc8s38IQ0Re3zK1J7lU",
     authDomain: "maze-game-01.firebaseapp.com",
@@ -20,17 +20,18 @@ var firebaseConfig = {
 
 
   var playersRef = database.ref("players");
-  var currentTurnRef = database.ref("turn");
+
   var username = "";
   var username2 = "";
+  var currentPlayers = null;
+  var playerNum = false;
+  var playerOneExists = false;
+  var playerTwoExists = false;
+  var playerOneData = null;
+  var playerTwoData = null;
 
 
-//----------------------------------------------------//
-
-
-
-
-$(document).ready(function(){
+    //-------------------------------------------------//
     
     var template = [
 
@@ -133,81 +134,33 @@ $(document).ready(function(){
     
     ];
 
+
     var canvas = document.getElementById("canvas");
     
     var ctx = canvas.getContext("2d");
     
-    var cat = new Image();
-    cat.src = "assets/images/cat.png";
+
+    //hero image array
+
+    
+    var ninja = new Image();
+    ninja.src = "assets/images/ninja.png";
+
+    var knight = new Image();
+    knight.src = "assets/images/Knightt.jpg";
     
     var tuna = new Image();
-    tuna.src = "assets/images/cat.png";
+    tuna.src = "assets/images/treasure.png";
     
     var wall = new Image();
-    wall.src = "assets/images/wall.png";
+    wall.src = "assets/images/brickwall.png";
     
     var maze = [];
 
     var moveTrack = [];
 
-    //----------------------------------------------------//
-    var playersRef = database.ref("players");
-    var playerOneExists = false;
-    var playerTwoExists = false;
-    var currentPlayers = null;
-    var playerOneData = null;
-    var playerTwoData = null;
-    //-----------------------------------------------------------------------------//
-
-// Tracks changes in key which contains player objects
-playersRef.on("value", function(snapshot) {
-    // length of the 'players' array
-    currentPlayers = snapshot.numChildren();
-  
-    // Check to see if players exist
-    playerOneExists = snapshot.child("1").exists();
-    playerTwoExists = snapshot.child("2").exists();
-  
-    // Player data objects
-    playerOneData = snapshot.child("1").val();
-    playerTwoData = snapshot.child("2").val();
-  
-    // If theres a player 1, fill in name and win loss data
-    if (playerOneExists) {
-      $("#player1-name").text(playerOneData.name);
-      $("#player1-wins").text("Wins: " + playerOneData.wins);
-      $("#player1-losses").text("Losses: " + playerOneData.losses);
-    } else {
-      // If there is no player 1, clear win/loss data and show waiting
-      $("#player1-name").text("Waiting for Player 1");
-      $("#player1-wins").empty();
-      $("#player1-losses").empty();
-    }
-  
-    // If theres a player 2, fill in name and win/loss data
-    if (playerTwoExists) {
-      $("#player2-name").text(playerTwoData.name);
-      $("#player2-wins").text("Wins: " + playerTwoData.wins);
-      $("#player2-losses").text("Losses: " + playerTwoData.losses);
-    } else {
-      // If no player 2, clear win/loss and show waiting
-      $("#player2-name").text("Waiting for Player 2");
-      $("#player2-wins").empty();
-      $("#player2-losses").empty();
-    }
-  });
-
-  // When a player joins, checks to see if there are two players now. If yes, then it will start the game.
-playersRef.on("child_added", function(snapshot) {
-    if (currentPlayers === 1) {
-      // set turn to 1, which starts the game
-      currentTurnRef.set(1);
-    }
-  });
-  
-
-
-    //-----------------------------------------------------------------------------//
+   
+    //-----------------------------------------------//
     
     //Set up start location of player 1
     var player = new Object ({
@@ -216,11 +169,10 @@ playersRef.on("child_added", function(snapshot) {
         loc :1166,
         moves:0
     });
-    
     var x = 0;
     var y = 0;
 
-    //Set up start location of player 2
+    // //Set up start location of player 2
 
     var player2 = new Object ({
         x   :0,
@@ -231,6 +183,7 @@ playersRef.on("child_added", function(snapshot) {
     
     var x = 0;
     var y = 0;
+
 
     
     //Save maze states in each cell
@@ -258,16 +211,17 @@ playersRef.on("child_added", function(snapshot) {
         })
     }
 
-     //Push location record to move tracker for PLayer 2
-        function moveTracker2() {
+         //Push location record to move tracker for PLayer 2
+         function moveTracker2() {
             moveTrack2.push({
             "x"  : x , 
             "y"  : y , 
             "loc": player2.loc
             })
         }
-        
     
+//KEY FUNCTION FOR PLAYER 1 //
+
     //Generate key in function for moving
     document.onkeydown = function (event) {
 
@@ -285,6 +239,7 @@ playersRef.on("child_added", function(snapshot) {
                         // player.x * 
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
+                       
                         player.x ++;
                         player.moves ++;
                         moveTracker();
@@ -305,6 +260,7 @@ playersRef.on("child_added", function(snapshot) {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
+                       
                         player.x --;
                         player.moves ++;
                         moveTracker();
@@ -326,6 +282,7 @@ playersRef.on("child_added", function(snapshot) {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
+                       
                         player.y ++;
                         player.moves ++;
                         moveTracker();
@@ -348,6 +305,7 @@ playersRef.on("child_added", function(snapshot) {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
+                        
                         player.y --;
                         player.moves ++;
                         moveTracker();
@@ -356,55 +314,35 @@ playersRef.on("child_added", function(snapshot) {
                     else (player.loc += 53);
                 }
                 break;
-        }
-    
-        console.log(moveTrack);
 
-        //Put image of where players are
-        ctx.drawImage(cat, player.x * 15, player.y * 15, 15, 15);
-        // ctx.fill();
-    
-        //Print moves on screen
-        document.getElementById("moves").innerText = "Moves: " + player.moves;
 
-        //When players' location match exit location, players win.
-        if (maze[player.loc].state == 2) {
-            document.getElementById("moves").innerText = "You win!";
-            // location.reload();
-        }
-    
-    }
 
-                    //Player 2 Key Functions //
-    //----------------------------------------------------------//
-
-     //Generate key in function for moving
-     document.onkeydown = function (event) {
-
-        switch (event.keyCode) {
+                //PLAYER 2 CONTROLS
     
             //Right
-            case 68:
-            //Once player2 click right key, players x loction will add 1 and moves willl increase 1. If hitting the wall, the right key wont't do anything. 
+            case 76:
+                //Once players click right key, players x loction will add 1 and moves willl increase 1. If hitting the wall, the right key wont't do anything. 
 
                 if (player2.x != 52){
                     player2.loc ++;
                     if (maze[player2.loc].state != 0 ){
 
                         //Paint where players were before they click keys
-                        // player2.x * 
+                        // player.x * 
                         ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
                         ctx.fill();
+                        
                         player2.x ++;
                         player2.moves ++;
                         moveTracker2();
                     }
                     else (player2.loc--);
                 }
+             
                 break;
             
             //Left
-            case 65:
+            case 74:
                 //Once players click left key, players x loction will decrease 1 and moves willl increase 1. If hitting the wall, the left key wont't do anything.
 
 
@@ -415,6 +353,7 @@ playersRef.on("child_added", function(snapshot) {
                         //Paint where players were before they click keys
                         ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
                         ctx.fill();
+                       
                         player2.x --;
                         player2.moves ++;
                         moveTracker2();
@@ -424,7 +363,7 @@ playersRef.on("child_added", function(snapshot) {
                 break;
     
             //Down
-            case 83:
+            case 75:
                 //Once players click down key, players y loction will increase 1 and moves willl increase 1. If hitting the wall, the down key wont't do anything. 
                 
                 if (player2.y !=46){
@@ -436,6 +375,7 @@ playersRef.on("child_added", function(snapshot) {
                         //Paint where players were before they click keys
                         ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
                         ctx.fill();
+                       
                         player2.y ++;
                         player2.moves ++;
                         moveTracker2();
@@ -447,7 +387,7 @@ playersRef.on("child_added", function(snapshot) {
                 break;
             
             //Up
-            case 87:
+            case 73:
                 //Once players click up key, players y loction will increase 1 and moves willl increase 1. If hitting the wall, the up key wont't do anything.
 
                 if (player2.y !=0){
@@ -458,6 +398,7 @@ playersRef.on("child_added", function(snapshot) {
                         //Paint where players were before they click keys
                         ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
                         ctx.fill();
+                        
                         player2.y --;
                         player2.moves ++;
                         moveTracker2();
@@ -465,28 +406,19 @@ playersRef.on("child_added", function(snapshot) {
 
                     else (player2.loc += 53);
                 }
+
                 break;
+
+                 
         }
-    
-        console.log(moveTrack);
 
 
-
-        //----------------------------------//
-
-        //Put image of where players are
-        ctx.drawImage(cat, player.x * 15, player.y * 15, 15, 15);
-
-                             //Player 2 Image //
-        //--------------------------------------------------//
-
-        ctx.drawImage(cat, player2.x * 15, player2.y * 15, 15, 15);
-               
-        // ctx.fill();
+        
+        ctx.drawImage(knight, player.x * 15, player.y * 15, 15, 15);
+        ctx.drawImage(ninja, player2.x * 15, player2.y * 15, 15, 15);
     
         //Print moves on screen
         document.getElementById("moves").innerText = "Moves: " + player.moves;
-        //Player 2 moves on screen counter
         document.getElementById("moves2").innerText = "Moves: " + player2.moves;
 
         //When players' location match exit location, players win.
@@ -494,12 +426,31 @@ playersRef.on("child_added", function(snapshot) {
             document.getElementById("moves").innerText = "You win!";
             // location.reload();
         }
-//PLAYER 2 //
+
         if (maze[player2.loc].state == 2) {
             document.getElementById("moves2").innerText = "You win!";
             // location.reload();
         }
     
+    }
+
+
+    //Print moves on screen
+    document.getElementById("moves").innerText = "Moves: " + player.moves;
+
+    //Player 2 moves on screen counter
+    document.getElementById("moves2").innerText = "Moves: " + player2.moves;
+
+    //When players' location match exit location, players win.
+    if (maze[player.loc].state == 2) {
+        document.getElementById("moves").innerText = "You win!";
+        // location.reload();
+    }
+
+    //PLAYER 2 MOVES//
+    if (maze[player2.loc].state == 2) {
+        document.getElementById("moves2").innerText = "You win!";
+        // location.reload();
     }
     
     document.getElementById("start-button").onclick = start;
@@ -507,7 +458,10 @@ playersRef.on("child_added", function(snapshot) {
     function start(){
     
         //Put image of where players are
-        ctx.drawImage(cat, player.x * 15, player.y * 15, 15, 15);
+        ctx.drawImage(knight, player.x * 15, player.y * 15, 15, 15);
+
+        //Put image of where players are
+        ctx.drawImage(ninja, player2.x * 15, player2.y * 15, 15, 15);
 
         //Drawing the wall and goal
 
@@ -522,54 +476,178 @@ playersRef.on("child_added", function(snapshot) {
         }
     }
 
+    //Player 1 Username Function
 
-//Enter Username for Player 1
+    $("#plyer1Name").on("click", function(event){
+        event.preventDefault();
+        username = $("#usernameEnter").val().trim();
+        // username.child('#usernameEnter').update();
+        database.ref().push({
+        username: username,
+        
+        
+        });
+    });
+
+    //Player 2 Username Function
+
+    $("#plyer2Name").on("click", function(event){
+        event.preventDefault();
+        username2 = $("#usernameEnter2").val().trim();
+        
+        database.ref().push({
+        username2: username2,
+        
+        
+        });
+    });
 
 
-$("#plyer1Name").on("click", function(event){
-    event.preventDefault();
-   username = $("#usernameEnter").val().trim();
-  // username.child('#usernameEnter').update();
-   database.ref().push({
-       username: username,
-       
-   });
+    //-------------------------------------------
 
-});
+    // Image scroll display
+    AOS.init();
 
-//DatabaseListener
+    // Get IG image
+    $("#getIGImage").on("click", function(){
 
-database.ref().on("child_added", function(snapshot) {
-    var ss = snapshot.val();
+        
+        var token = "22117331751.0da22be.d1003c3b370f47b390079af113bd34be";
 
-    // var addUser =
+  
+        $("#image-display").html("");
+        // first var token = "22117331751.0da22be.d1003c3b370f47b390079af113bd34be";
+        var token = "22117331751.3aaa3da.94e479597e8345899f9bdb342937150e";
+        num_photos = 1;
+        $.ajax({
+            url: "https://api.instagram.com/v1/users/self/media/recent",
+            dataType: "jsonp",
+            type: "GET",
+            data: {access_token: token, count: num_photos},
+            success: function(data){
+                console.log(data);
+                for( x in data.data ){
+                    var imageDiv = $('<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">');
+                    var playerImage = $("<img id='playerImage'>");
+                    playerImage.attr("src",data.data[x].images.low_resolution.url);
+                    $(imageDiv).append(playerImage);
+                    $("#image-display").append(imageDiv);
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    });
 
- 
-     $("#player1-name").text(ss.username);
-     $("#player2-name").text(ss.username2);
- 
- 
-     console.log(ss.username);
- 
-     $("#player1-name").append();
-     $("#player2-name").append();
- 
- 
-     return   
-   
- 
+    // Get random hero name and image
+    $("#randomHero").on("click", function(event){
+        $("#image-display").html("");
+        var randomID = Math.floor(Math.random()*731) + 1;
+        var queryURL = "https://www.superheroapi.com/api.php/2539613446097074/" + randomID;
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(response){
+            var randomName = response.name;
+            console.log(randomName);
+            $("#usernameEnter").attr("placeholder",randomName);
+
+            var imageDiv = $('<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">');
+            var playerImage = $("<img id='playerImage'>");
+            playerImage.attr("src",response.image.url);
+            $(imageDiv).append(playerImage);
+            $("#image-display").append(imageDiv);
+        })
+    });
+
+    // IMAGE PLAYER 2 IG
+    $("#getIGImage2").on("click", function(){
+        var token = "22117331751.0da22be.d1003c3b370f47b390079af113bd34be";
+    $("#image-display2").html("");
+    // first var token = "22117331751.0da22be.d1003c3b370f47b390079af113bd34be";
+    var token = "22117331751.3aaa3da.94e479597e8345899f9bdb342937150e";
+    num_photos = 1;
+    $.ajax({
+        url: "https://api.instagram.com/v1/users/self/media/recent",
+        dataType: "jsonp",
+        type: "GET",
+        data: {access_token: token, count: num_photos},
+        success: function(data){
+            console.log(data);
+            for( x in data.data ){
+                var imageDiv2 = $('<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">');
+                var playerImage2 = $("<img id='playerImage2'>");
+                playerImage2.attr("src",data.data[x].images.low_resolution.url);
+                $(imageDiv2).append(playerImage2);
+                $("#image-display2").append(imageDiv2);
+            }
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+ });
+ // Get random hero name and image for PLAYER 2
+ $("#randomHero2").on("click", function(event){
+    $("#image-display2").html("");
+    var randomID = Math.floor(Math.random()*731) + 1;
+    var queryURL = "https://www.superheroapi.com/api.php/2539613446097074/" + randomID;
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response2){
+        var randomName2 = response2.name;
+        console.log(randomName2);
+        $("#usernameEnter2").attr("placeholder",randomName2);
+        var imageDiv2 = $('<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">');
+        var playerImage2 = $("<img id='playerImage2'>");
+        playerImage2.attr("src",response2.image.url);
+        $(imageDiv2).append(playerImage2);
+        $("#image-display2").append(imageDiv2);
+    })
  });
 
-//Enter Username for Player 2
+    //-------------------------------------------
 
-$("#plyer2Name").on("click", function(event){
-    event.preventDefault();
-   username2 = $("#usernameEnter2").val().trim();
+    //DatabaseListener
+    database.ref().on("child_added", function(snapshot) {
+        var ss = snapshot.val();
+        // var addUser =
+        $("#player1-name").text(ss.username);
+        $("#player2-name").text(ss.username2);
+        console.log(ss.username);
+        console.loh(ss.username2);
+        $("#player1-name").append();
+        $("#player2-name").append();
+        return   
+    });
+    //Enter Username for Player 2
+playersRef.on("value", function (snapshot) {
+
+    currentPlayers = snapshot.numChildren();
+
+    playerOneExists = snapshot.child("1").exists();
+    playerTwoExists = snapshot.child("2").exists();
   
-   database.ref().push({
-       username2: username2,
-       
-   })
+    // Player data objects
+    playerOneData = snapshot.child("1").val();
+    playerTwoData = snapshot.child("2").val();
+  
+    // If theres a player 1, fill in name and win loss data
+    if (playerOneExists) {
+        moveTracker();
+    } else {
+      // If there is no player 1, clear win/loss data and show waiting
+        moveTracker2();
+
+        console.log(moveTracker2);
+    }
+  
+  });
 
 });
-});
+
+
+
+//Created by Peiyu, Kyle, Amir, Manuel, and Alexis //
