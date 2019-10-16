@@ -441,13 +441,13 @@ var firebaseConfig = {
 
     //When players' location match exit location, players win.
     if (maze[player.loc].state == 2) {
-        document.getElementById("moves").innerText = "You win!";
+        document.getElementById("moves").innerText = "You win the treasure!";
         // location.reload();
     }
 
     //PLAYER 2 MOVES//
     if (maze[player2.loc2].state == 2) {
-        document.getElementById("moves2").innerText = "You win!";
+        document.getElementById("moves2").innerText = "You win the treasure!";
         // location.reload();
     }
     
