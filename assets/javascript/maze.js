@@ -434,10 +434,10 @@ var firebaseConfig = {
 
 
     //Print moves on screen
-    document.getElementById("moves").innerText = "Moves: " + player.moves;
+    document.getElementById("moves").innerText = "Player 1 Moves: " + player.moves;
 
     //Player 2 moves on screen counter
-    document.getElementById("moves2").innerText = "Moves: " + player2.moves2;
+    document.getElementById("moves2").innerText = "Player 2 Moves: " + player2.moves2;
 
     //When players' location match exit location, players win.
     if (maze[player.loc].state == 2) {
