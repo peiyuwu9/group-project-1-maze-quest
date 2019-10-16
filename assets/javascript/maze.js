@@ -241,7 +241,6 @@ var firebaseConfig = {
                         // player.x * 
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                       
                         player.x ++;
                         player.moves ++;
                         moveTracker();
@@ -262,7 +261,6 @@ var firebaseConfig = {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                       
                         player.x --;
                         player.moves ++;
                         moveTracker();
@@ -284,7 +282,6 @@ var firebaseConfig = {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                       
                         player.y ++;
                         player.moves ++;
                         moveTracker();
@@ -307,7 +304,6 @@ var firebaseConfig = {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                        
                         player.y --;
                         player.moves ++;
                         moveTracker();
@@ -429,7 +425,7 @@ var firebaseConfig = {
             // location.reload();
         }
 
-        if (maze[player2.loc].state == 2) {
+        if (maze[player2.loc2].state == 2) {
             document.getElementById("moves2").innerText = "You win!";
             // location.reload();
         }
