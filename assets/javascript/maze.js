@@ -241,7 +241,6 @@ var firebaseConfig = {
                         // player.x * 
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                       
                         player.x ++;
                         player.moves ++;
                         moveTracker();
@@ -262,7 +261,6 @@ var firebaseConfig = {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                       
                         player.x --;
                         player.moves ++;
                         moveTracker();
@@ -284,7 +282,6 @@ var firebaseConfig = {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                       
                         player.y ++;
                         player.moves ++;
                         moveTracker();
@@ -307,7 +304,6 @@ var firebaseConfig = {
                         //Paint where players were before they click keys
                         ctx.rect(player.x * 15, player.y * 15, 15 ,15);
                         ctx.fill();
-                        
                         player.y --;
                         player.moves ++;
                         moveTracker();
@@ -425,12 +421,12 @@ var firebaseConfig = {
 
         //When players' location match exit location, players win.
         if (maze[player.loc].state == 2) {
-            document.getElementById("moves").innerText = "You win!";
+            document.getElementById("moves").innerText = "You win the treasure!";
             // location.reload();
         }
 
-        if (maze[player2.loc].state == 2) {
-            document.getElementById("moves2").innerText = "You win!";
+        if (maze[player2.loc2].state == 2) {
+            document.getElementById("moves2").innerText = "You win the treasure!";
             // location.reload();
         }
     
@@ -438,20 +434,20 @@ var firebaseConfig = {
 
 
     //Print moves on screen
-    document.getElementById("moves").innerText = "Moves: " + player.moves;
+    document.getElementById("moves").innerText = "Player 1 Moves: " + player.moves;
 
     //Player 2 moves on screen counter
-    document.getElementById("moves2").innerText = "Moves: " + player2.moves2;
+    document.getElementById("moves2").innerText = "Player 2 Moves: " + player2.moves2;
 
     //When players' location match exit location, players win.
     if (maze[player.loc].state == 2) {
-        document.getElementById("moves").innerText = "You win!";
+        document.getElementById("moves").innerText = "You win the treasure!";
         // location.reload();
     }
 
     //PLAYER 2 MOVES//
     if (maze[player2.loc2].state == 2) {
-        document.getElementById("moves2").innerText = "You win!";
+        document.getElementById("moves2").innerText = "You win the treasure!";
         // location.reload();
     }
     
