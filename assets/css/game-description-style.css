@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Allura|Josefin+Sans&display=swap');
+#navigationContainer {
+    color: aliceblue;
+    background: black;
+    padding: 3px 5px 3px 5px;
+    margin: 0 30% 0 30%;
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: center;
+    width: 40%;
+    }
+
+body{
+    margin: 0;
+    padding: 0;
+    background: url(https://res.cloudinary.com/mrv5122/image/upload/v1571157833/aboutmebackground_mygn17.jpg);
+    background-size: cover;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.box{
+    width: 475px;
+    background: rgba(0,0,0,0.4);
+    padding: 40px;
+    text-align: center;
+    margin: auto;
+    margin-top: 5%;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.button{
+    height:30px; 
+    width:100px; 
+    margin: -20px -50px; 
+    position:relative;
+    top:50%; 
+    left:50%;
+    
+    
+
+}
+
+/* list-style-type: none; */

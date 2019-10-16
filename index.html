@@ -4,85 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./assets/css/index.css">
     <title>Maze Quest</title>
-    
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Firebase References -->
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-    
-    <!-- jQyuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    <!-- Bootrstrp -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
-    <script type="text/javascript" src="assets/javascript/maze.js"></script>
-
-    <style>
-        body {
-            background: white;
-        }
-        canvas {
-            position: absolute;
-            /* border: 1px solid black; */
-        }
-        label {
-            color: black;
-        }
-    </style>
 
 </head>
-<body>
-    <!-- Header -->
-    <div class="container" id="headerContainer">
-        <h1>"Maze-Quest"</h1>
-    </div>
 
-    <!--Navigation-->
+<body>
+
+     <!--Navigation-->
     <div class="container" id="navigationContainer">
-        <ul class="nav">
+        <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link-active" href="#">Play!</a>
-            </li>
+                <a class="nav-link-active" href="index.html">Play!</a>
+            </li> <br>
             <li class="nav-item">
-                <a class="nav-link-active" href="#">About the Game</a>
-            </li>
+                <a class="nav-link-active" href="game-description.html">About the Game</a>
+            </li><br>
             <li class="nav-item">
-                <a class="nav-link-active" href="#">About the Creators</a>
+                <a class="nav-link-active" href="aboutme.html">About the Creators</a>
             </li>
         </ul>
     </div>
-    
+
+ <!-- Header -->
+ <div class="container" id="headerContainer"><h1>Maze-Quest</h1></div>
     <!--Game Container-->
+    
     
     <div class="container" id="gameContainer">
     <!-- Content here -->
 
-        <div class="row">
-            <div class="col-sm-12">
-                <button id="start-button">Start</button>
-            </div>
-            <div class="col-sm-12">
-                <label id="moves">Moves: 0</label>
-            </div>
-            <div class="col-sm-12">
-                <canvas id="canvas" width="795" height="705"></canvas>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <button id="start-button">Start</button>
+        </div>
+        <div class="col-sm-12">
+            <label id="moves">Moves: 0</label>
+        </div>
+<!--Player 2 Move counter-->
+        <div class="col-sm-12">
+                <label id="moves2">Moves: 0</label>
+        </div>
+
+        <div class="col-sm-12">
+            <canvas id="canvas" width="795" height="705"></canvas>
+        </div>
+    </div>
+
+</div>
+    
+    
+    <div class=playerContainer>
+
+        <!--  Player 1 Enters Name -->
+        <div id="player1UserEnter">
+            
+            <div id="player1">
+                <h3 id="player1-name">Player 1</h3>
+                <input id="usernameEnter" placeholder="Player 1 Username"/>
+            <button id=plyer1Name>Enter</button>
+            <button id="getIGImage">Get IG Image</button>
+            <button id="randomHero">Get Hero Name & Image</button>
+                <div id="image-display"></div>
             </div>
         </div>
 
-    </div>
-    
-    <!-- Footer
-    <div class="container" id="footerContainer">
-        <div class="row">
-            <div class="col-sm-12">
-                <p>RU Bootcamp Project</p>
+        <!-- Player 2  Enters Name -->
+        <div id="player2UserEnter">
+            <input id="usernameEnter2" placeholder="Player 2 Username"/>
+            <button id=plyer2Name>Enter</button>
+            <button id="getIGImage2">Get IG Image</button>
+            <button id="randomHero2">Get Hero Name & Image</button>
+            <div id="player2">
+                <h3 id="player2-name">Player 2</h3>
+                <div id="image-display2"></div>
             </div>
-        </div> 
-    </div> -->
+        </div>
+    
+    </div>
 
+
+        <!-- Firebase References -->
+        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
+
+
+
+        <!-- Bootrstrp -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
+        <script type="text/javascript" src="assets/javascript/maze.js"></script>
+        
+        <!-- AOS Animatea on scroll library -->
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+  
 </body>
 </html>
