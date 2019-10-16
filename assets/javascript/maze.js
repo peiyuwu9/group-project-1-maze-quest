@@ -159,6 +159,8 @@ var firebaseConfig = {
 
     var moveTrack = [];
 
+    var moveTrack2 = [];
+
    
     //-----------------------------------------------//
     
@@ -175,14 +177,14 @@ var firebaseConfig = {
     // //Set up start location of player 2
 
     var player2 = new Object ({
-        x   :0,
-        y   :24,
-        loc :1272, 
-        moves:0
+        x2   :0,
+        y2   :24,
+        loc2 :1272, 
+        moves2:0
     });
     
-    var x = 0;
-    var y = 0;
+    var x2 = 0;
+    var y2 = 0;
 
 
     
@@ -212,11 +214,11 @@ var firebaseConfig = {
     }
 
          //Push location record to move tracker for PLayer 2
-         function moveTracker2() {
+    function moveTracker2() {
             moveTrack2.push({
-            "x"  : x , 
-            "y"  : y , 
-            "loc": player2.loc
+            "x"  : x2 , 
+            "y"  : y2 , 
+            "loc": player2.loc2
             })
         }
     
@@ -323,20 +325,20 @@ var firebaseConfig = {
             case 76:
                 //Once players click right key, players x loction will add 1 and moves willl increase 1. If hitting the wall, the right key wont't do anything. 
 
-                if (player2.x != 52){
-                    player2.loc ++;
-                    if (maze[player2.loc].state != 0 ){
+                if (player2.x2 != 52){
+                    player2.loc2 ++;
+                    if (maze[player2.loc2].state != 0 ){
 
                         //Paint where players were before they click keys
                         // player.x * 
-                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.rect(player2.x2 * 15, player2.y2 * 15, 15 ,15);
                         ctx.fill();
                         
-                        player2.x ++;
-                        player2.moves ++;
+                        player2.x2 ++;
+                        player2.moves2 ++;
                         moveTracker2();
                     }
-                    else (player2.loc--);
+                    else (player2.loc2--);
                 }
              
                 break;
@@ -346,19 +348,19 @@ var firebaseConfig = {
                 //Once players click left key, players x loction will decrease 1 and moves willl increase 1. If hitting the wall, the left key wont't do anything.
 
 
-                if (player2.x !=0){
-                    player2.loc --;
-                    if (maze[player2.loc].state != 0 ){
+                if (player2.x2 !=0){
+                    player2.loc2 --;
+                    if (maze[player2.loc2].state != 0 ){
 
                         //Paint where players were before they click keys
-                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.rect(player2.x2 * 15, player2.y2 * 15, 15 ,15);
                         ctx.fill();
                        
-                        player2.x --;
-                        player2.moves ++;
+                        player2.x2 --;
+                        player2.moves2 ++;
                         moveTracker2();
                     }
-                    else (player2.loc++);
+                    else (player2.loc2++);
                 }
                 break;
     
@@ -366,22 +368,22 @@ var firebaseConfig = {
             case 75:
                 //Once players click down key, players y loction will increase 1 and moves willl increase 1. If hitting the wall, the down key wont't do anything. 
                 
-                if (player2.y !=46){
+                if (player2.y2 !=46){
 
                     //player.loc += 53;
-                    player2.loc += 53;
-                    if (maze[player2.loc].state != 0 ){
+                    player2.loc2 += 53;
+                    if (maze[player2.loc2].state != 0 ){
 
                         //Paint where players were before they click keys
-                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.rect(player2.x2 * 15, player2.y2 * 15, 15 ,15);
                         ctx.fill();
                        
-                        player2.y ++;
-                        player2.moves ++;
+                        player2.y2 ++;
+                        player2.moves2 ++;
                         moveTracker2();
                     }
 
-                    else (player2.loc -= 53);
+                    else (player2.loc2 -= 53);
                     
                 }
                 break;
@@ -390,21 +392,21 @@ var firebaseConfig = {
             case 73:
                 //Once players click up key, players y loction will increase 1 and moves willl increase 1. If hitting the wall, the up key wont't do anything.
 
-                if (player2.y !=0){
+                if (player2.y2 !=0){
 
-                    player2.loc -= 53;
-                    if (maze[player2.loc].state != 0 ){
+                    player2.loc2 -= 53;
+                    if (maze[player2.loc2].state != 0 ){
 
                         //Paint where players were before they click keys
-                        ctx.rect(player2.x * 15, player2.y * 15, 15 ,15);
+                        ctx.rect(player2.x2 * 15, player2.y2 * 15, 15 ,15);
                         ctx.fill();
                         
-                        player2.y --;
-                        player2.moves ++;
+                        player2.y2 --;
+                        player2.moves2 ++;
                         moveTracker2();
                     }
 
-                    else (player2.loc += 53);
+                    else (player2.loc2 += 53);
                 }
 
                 break;
@@ -415,11 +417,11 @@ var firebaseConfig = {
 
         
         ctx.drawImage(knight, player.x * 15, player.y * 15, 15, 15);
-        ctx.drawImage(ninja, player2.x * 15, player2.y * 15, 15, 15);
+        ctx.drawImage(ninja, player2.x2 * 15, player2.y2 * 15, 15, 15);
     
         //Print moves on screen
         document.getElementById("moves").innerText = "Moves: " + player.moves;
-        document.getElementById("moves2").innerText = "Moves: " + player2.moves;
+        document.getElementById("moves2").innerText = "Moves: " + player2.moves2;
 
         //When players' location match exit location, players win.
         if (maze[player.loc].state == 2) {
@@ -439,7 +441,7 @@ var firebaseConfig = {
     document.getElementById("moves").innerText = "Moves: " + player.moves;
 
     //Player 2 moves on screen counter
-    document.getElementById("moves2").innerText = "Moves: " + player2.moves;
+    document.getElementById("moves2").innerText = "Moves: " + player2.moves2;
 
     //When players' location match exit location, players win.
     if (maze[player.loc].state == 2) {
@@ -448,7 +450,7 @@ var firebaseConfig = {
     }
 
     //PLAYER 2 MOVES//
-    if (maze[player2.loc].state == 2) {
+    if (maze[player2.loc2].state == 2) {
         document.getElementById("moves2").innerText = "You win!";
         // location.reload();
     }
@@ -461,7 +463,7 @@ var firebaseConfig = {
         ctx.drawImage(knight, player.x * 15, player.y * 15, 15, 15);
 
         //Put image of where players are
-        ctx.drawImage(ninja, player2.x * 15, player2.y * 15, 15, 15);
+        ctx.drawImage(ninja, player2.x2 * 15, player2.y2 * 15, 15, 15);
 
         //Drawing the wall and goal
 
